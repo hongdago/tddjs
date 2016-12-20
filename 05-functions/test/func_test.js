@@ -40,4 +40,25 @@ TestCase("FormalParamentersArgumentsTest", {
     "test no dynamic mapping for missing parameters": function() {
         assertUndefined(modify(1));
     }
-})
+});
+
+var global = this;
+function adder(base){
+    return function(num){
+        return base + num;}
+}
+TestCase("GlobalObjectTest",{
+    "test window should be global Object":function(){
+        assertSame(global,window);
+        assertSame(global.window,window);
+        assertSame(window,window.window);
+    },
+    "test should add or subtract one from arg":function(){
+        var inc = adder(1);
+        var des = adder(-1);
+
+        assertEquals(3,inc(2));
+        assertEquals(3,des(4));
+        assertEquals(3,inc(des(3)));
+    }
+});
